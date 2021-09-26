@@ -201,7 +201,7 @@ class MangoSimpleClient {
     filterForMangoAccount: boolean = false,
     marketName?: string
   ): Promise<OrderInfo[][]> {
-    this.mangoAccount.loadOpenOrders(
+    await this.mangoAccount.loadOpenOrders(
       this.connection,
       new PublicKey(this.mangoGroupConfig.serumProgramId)
     );

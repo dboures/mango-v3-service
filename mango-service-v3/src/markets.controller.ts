@@ -260,8 +260,8 @@ class MarketsController implements Controller {
         return response.send({
           success: true,
           result: {
-            asks: asks,
-            bids: bids,
+            asks,
+            bids,
           },
         });
       })
@@ -278,22 +278,18 @@ class MarketsController implements Controller {
       false,
       marketName
     );
-    const bids_ = ordersInfo
+    const bids = ordersInfo
       .flat()
       .filter((orderInfo) => orderInfo.order.side === "buy")
-      .sort((b1, b2) => b2.order.price - b1.order.price);
-    const asks_ = ordersInfo
-      .flat()
-      .filter((orderInfo) => orderInfo.order.side === "sell")
-      .sort((a1, a2) => a1.order.price - a2.order.price);
-
-    const asks = asks_
+      .sort((b1, b2) => b2.order.price - b1.order.price)
       .slice(0, depth)
       .map((ask) => [ask.order.price, ask.order.size]);
-
-    const bids = bids_
+    const asks = ordersInfo
+      .flat()
+      .filter((orderInfo) => orderInfo.order.side === "sell")
+      .sort((a1, a2) => a1.order.price - a2.order.price)
       .slice(0, depth)
-      .map((bid) => [bid.order.price, bid.order.size]);
+      .map((ask) => [ask.order.price, ask.order.size]);
     return { asks, bids };
   }
 

@@ -4,6 +4,7 @@
     "no-implicit-dependencies": false,
     "no-submodule-imports": false,
     "no-object-literal-type-assertion": false,
-    "no-string-literal": false
+    "no-string-literal": false,
+    "no-floating-promises": true
   }
 }

@@ -15,19 +15,26 @@ class App {
 
   constructor() {
     this.app = express();
-    MangoSimpleClient.create().then((mangoSimpleClient) => {
-      this.mangoSimpleClient = mangoSimpleClient;
+    MangoSimpleClient.create()
+      .then((mangoSimpleClient) => {
+        this.mangoSimpleClient = mangoSimpleClient;
 
-      this.app.use(bodyParser.json({ limit: "50mb" }));
+        this.app.use(bodyParser.json({ limit: "50mb" }));
 
-      this.initializeControllers([
-        new CoinController(this.mangoSimpleClient),
-        new WalletController(this.mangoSimpleClient),
-        new OrdersController(this.mangoSimpleClient),
-        new MarketsController(this.mangoSimpleClient),
-        new AccountController(this.mangoSimpleClient),
-      ]);
-    });
+        this.initializeControllers([
+          new CoinController(this.mangoSimpleClient),
+          new WalletController(this.mangoSimpleClient),
+          new OrdersController(this.mangoSimpleClient),
+          new MarketsController(this.mangoSimpleClient),
+          new AccountController(this.mangoSimpleClient),
+        ]);
+      })
+      .catch((error) => {
+        logger.error(
+          `Error initializing mango simple client - ${error.message}`
+        );
+        process.exit(1);
+      });
   }
 
   private initializeControllers(controllers: Controller[]) {
