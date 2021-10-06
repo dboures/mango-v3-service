@@ -119,7 +119,7 @@ class MangoSimpleClient {
       );
       if (!filteredMangoAccounts.length) {
         logger.error(
-          `- no mango account found for key ${process.env.MANGO_ACCOUNT}`
+          `- no mango account found for key ${process.env.MANGO_ACCOUNT}. Please make sure that you created a mango account via the Mango Markets UI.`
         );
         process.exit(1);
       }
