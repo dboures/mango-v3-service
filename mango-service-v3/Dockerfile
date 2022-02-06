@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:current-slim
 
 RUN npm install -g pm2
 
