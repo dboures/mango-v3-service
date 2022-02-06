@@ -8,7 +8,7 @@ import {
 import { OpenOrders } from "@project-serum/serum";
 import Controller from "controller.interface";
 import { RequestErrorCustom } from "dtos";
-import e, { NextFunction, Request, Response, Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { body } from "express-validator";
 import { sumBy } from "lodash";
 import MangoSimpleClient from "mango.simple.client";

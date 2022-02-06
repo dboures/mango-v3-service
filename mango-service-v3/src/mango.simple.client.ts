@@ -33,10 +33,10 @@ import {
 } from "@solana/web3.js";
 import BN from "bn.js";
 import fs from "fs";
-import fetch from "node-fetch";
 import os from "os";
 import { OrderInfo } from "types";
 import { logger, zipDict } from "./utils";
+import axios from "axios";
 
 class MangoSimpleClient {
   constructor(
@@ -297,10 +297,10 @@ class MangoSimpleClient {
         if (openOrdersAccount === undefined) {
           continue;
         }
-        const response = await fetch(
+        const response = await axios.get(
           `https://event-history-api.herokuapp.com/trades/open_orders/${openOrdersAccount.publicKey.toBase58()}`
         );
-        const responseJson = await response.json();
+        const responseJson = await response.data;
         allButRecentMangoAccountSpotFills =
           allButRecentMangoAccountSpotFills.concat(
             responseJson?.data ? responseJson.data : []
@@ -346,10 +346,10 @@ class MangoSimpleClient {
     // 1. latest fills from on-chain
     let allRecentMangoAccountPerpFills: any[] = [];
     // 2. historic from off-chain REST service
-    const response = await fetch(
+    const response = await axios.get(
       `https://event-history-api.herokuapp.com/perp_trades/${this.mangoAccount.publicKey.toBase58()}`
     );
-    const responseJson = await response.json();
+    const responseJson = await response.data;
     const allButRecentMangoAccountPerpFills = responseJson?.data || [];
     for (const config of allMarketConfigs) {
       if (config.kind === "perp") {

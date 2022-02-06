@@ -8,11 +8,7 @@ import Controller from "controller.interface";
 import { RequestErrorCustom } from "dtos";
 import { NextFunction, Request, Response, Router } from "express";
 import MangoSimpleClient from "mango.simple.client";
-import {
-  logger,
-  patchExternalMarketName,
-  patchInternalMarketName,
-} from "./utils";
+import { logger, patchInternalMarketName } from "./utils";
 
 class PositionsController implements Controller {
   public path = "/api/positions";

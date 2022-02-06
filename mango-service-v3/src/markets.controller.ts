@@ -20,6 +20,7 @@ import {
   patchExternalMarketName,
   patchInternalMarketName,
 } from "./utils";
+import axios from "axios";
 
 class MarketsController implements Controller {
   public path = "/api/markets";
@@ -209,7 +210,8 @@ class MarketsController implements Controller {
       baseCurrency: marketConfig.baseSymbol,
       quoteCurrency: "USDC",
       // note: event-history-api doesn't index volume for spot
-      quoteVolume24h: marketData.quoteVolume24h !== 0 ? marketData.quoteVolume24h : undefined,
+      quoteVolume24h:
+        marketData.quoteVolume24h !== 0 ? marketData.quoteVolume24h : undefined,
       change1h: marketData.change1h,
       change24h: marketData.change24h,
       changeBod: marketData.changeBod,
@@ -227,7 +229,8 @@ class MarketsController implements Controller {
       sizeIncrement: minOrderSize,
       restricted: undefined,
       // note: event-history-api doesn't index volume for spot
-      volumeUsd24h: marketData.volumeUsd24h !== 0 ? marketData.volumeUsd24h : undefined,
+      volumeUsd24h:
+        marketData.volumeUsd24h !== 0 ? marketData.volumeUsd24h : undefined,
     } as MarketDto;
   }
 
@@ -324,10 +327,10 @@ class MarketsController implements Controller {
   };
 
   private async getTradesInternal(marketPk: PublicKey) {
-    const tradesResponse = await fetch(
+    const tradesResponse = await axios.get(
       `https://event-history-api-candles.herokuapp.com/trades/address/${marketPk.toBase58()}`
     );
-    const parsedTradesResponse = (await tradesResponse.json()) as any;
+    const parsedTradesResponse = (await tradesResponse.data) as any;
     if ("s" in parsedTradesResponse && parsedTradesResponse["s"] === "error") {
       return [];
     }
@@ -391,12 +394,14 @@ export default MarketsController;
 
 /// helper functions
 
-async function getMarketData(marketConfig: MarketConfig): Promise<Partial<MarketDto>> {
-  const marketDataResponse = await fetch(
-    `https://event-history-api-candles.herokuapp.com/markets/` + 
-    `${patchInternalMarketName(marketConfig.name)}`
+async function getMarketData(
+  marketConfig: MarketConfig
+): Promise<Partial<MarketDto>> {
+  const marketDataResponse = await axios.get(
+    `https://event-history-api-candles.herokuapp.com/markets/` +
+      `${patchInternalMarketName(marketConfig.name)}`
   );
-  return marketDataResponse.json();
+  return marketDataResponse.data;
 }
 
 async function getOhlcv(
@@ -415,11 +420,11 @@ async function getOhlcv(
   }
   const fromSFixed = fromS.toFixed();
   const toSFixed = toS.toFixed();
-  const historyResponse = await fetch(
+  const historyResponse = await axios.get(
     `https://event-history-api-candles.herokuapp.com/tv/history` +
       `?symbol=${market}&resolution=${resolution}&from=${fromSFixed}&to=${toSFixed}`
   );
-  return historyResponse.json();
+  return historyResponse.data;
 }
 
 /// Dtos
