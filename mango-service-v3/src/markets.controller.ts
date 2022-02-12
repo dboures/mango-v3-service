@@ -10,7 +10,6 @@ import Big from "big.js";
 import { BadRequestError, RequestErrorCustom } from "dtos";
 import { NextFunction, Request, Response, Router } from "express";
 import { param, query, validationResult } from "express-validator";
-import fetch from "node-fetch";
 import { OrderInfo } from "types";
 import Controller from "./controller.interface";
 import MangoSimpleClient from "./mango.simple.client";
@@ -153,7 +152,7 @@ class MarketsController implements Controller {
         false,
         marketConfig.name
       )) as OrderInfo[][],
-      fetch(
+      axios.get(
         `https://event-history-api-candles.herokuapp.com/trades/address/${marketConfig.publicKey.toBase58()}`
       ),
     ]);
@@ -169,7 +168,7 @@ class MarketsController implements Controller {
       .sort((a1, a2) => a1.order.price - a2.order.price);
 
     // latest trade+price
-    const parsedTradesResponse = (await tradesResponse.json()) as any;
+    const parsedTradesResponse = (await tradesResponse.data) as any;
     const lastPrice =
       "s" in parsedTradesResponse && parsedTradesResponse["s"] === "error"
         ? null
