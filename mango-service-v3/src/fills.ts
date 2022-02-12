@@ -4,7 +4,6 @@ import MangoSimpleClient from "./mango.simple.client";
 import { query, validationResult } from "express-validator";
 import { isValidPerpMarket, logger, patchExternalMarketName } from "./utils";
 import { BadRequestError, RequestErrorCustom } from "./dtos";
-import fetch from "node-fetch";
 
 export class FillsController implements Controller {
   public path = "/api/fills";
