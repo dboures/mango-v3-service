@@ -37,6 +37,7 @@ import os from "os";
 import { OrderInfo } from "types";
 import { logger, zipDict } from "./utils";
 import axios from "axios";
+import bs58 from "bs58";
 
 class MangoSimpleClient {
   constructor(
@@ -86,12 +87,16 @@ class MangoSimpleClient {
     logger.info(`- loading cache`);
     await mangoGroup.loadCache(connection);
 
-    const privateKeyPath =
-      process.env.PRIVATE_KEY_PATH || os.homedir() + "/.config/solana/id.json";
-    logger.info(`- loading private key at location ${privateKeyPath}`);
-    const owner = new Account(
-      JSON.parse(fs.readFileSync(privateKeyPath, "utf-8"))
-    );
+    let owner;
+    if (process.env.PRIVATE_KEY_BASE58) {
+      owner = new Account(bs58.decode(process.env.PRIVATE_KEY_BASE58));
+    } else {
+      const privateKeyPath =
+        process.env.PRIVATE_KEY_PATH ||
+        os.homedir() + "/.config/solana/id.json";
+      logger.info(`- loading private key at location ${privateKeyPath}`);
+      owner = new Account(JSON.parse(fs.readFileSync(privateKeyPath, "utf-8")));
+    }
 
     let mangoAccount;
 

@@ -4,6 +4,7 @@ A REST API server on top of mango markets v3, written in typescript + expressjs 
 # Environment variables
 All environment variables are optional.
 * PRIVATE_KEY_PATH - path to private key, default is ~/.config/solana/id.json
+* PRIVATE_KEY_BASE58 - environment variable containing base58 encoded private key
 * PORT - port on which expressjs webserver runs, default is 3000
 * CLUSTER_URL - RPC node url e.g., default is scheduled rotation between  https://api.mainnet-beta.solana.com, https://lokidfxnwlabdq.main.genesysgo.net:8899/,
       https://solana-api.projectserum.com/

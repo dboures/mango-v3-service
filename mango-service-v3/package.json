@@ -13,10 +13,12 @@
   "license": "MIT",
   "dependencies": {
     "@blockworks-foundation/mango-client": "^3.2.16",
+    "@types/bs58": "^4.0.1",
     "ansi-regex": "^6.0.1",
     "axios": "^0.25.0",
     "big.js": "^6.1.1",
     "body-parser": "^1.19.0",
+    "bs58": "^4.0.1",
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
     "lodash": "^4.17.21",
