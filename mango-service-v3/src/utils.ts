@@ -1,5 +1,8 @@
-import { Config, GroupConfig } from "@blockworks-foundation/mango-client";
-import { I80F48 } from "@blockworks-foundation/mango-client/lib/src/fixednum";
+import {
+  Config,
+  GroupConfig,
+  I80F48,
+} from "@blockworks-foundation/mango-client";
 import { CustomValidator } from "express-validator";
 import pino from "pino";
 import { Account, Connection, Transaction } from "@solana/web3.js";
