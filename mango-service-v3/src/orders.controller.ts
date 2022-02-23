@@ -40,6 +40,7 @@ class OrdersController implements Controller {
       body("ioc").isBoolean(),
       body("postOnly").isBoolean(),
       body("clientId").isNumeric(),
+      body("expiryTimestamp").isNumeric().default(0),
       this.placeOrder
     );
 
@@ -366,6 +367,7 @@ interface PlaceOrderDto {
   ioc: boolean;
   postOnly: boolean;
   clientId: number;
+  expiryTimestamp: number;
 }
 
 interface PlaceOrderResponseDto {

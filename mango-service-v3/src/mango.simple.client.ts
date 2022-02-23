@@ -397,7 +397,8 @@ class MangoSimpleClient {
     quantity: number,
     price?: number,
     orderType: "ioc" | "postOnly" | "market" | "limit" = "limit",
-    clientOrderId?: number
+    clientOrderId?: number,
+    expiryTimestamp: number = 0
   ): Promise<TransactionSignature> {
     if (market.includes("PERP")) {
       const perpMarketConfig = getMarketByBaseSymbolAndKind(
@@ -414,17 +415,15 @@ class MangoSimpleClient {
       // TODO: this is a workaround, mango-v3 has a assertion for price>0 for all order types
       // this will be removed soon hopefully
       price = orderType !== "market" ? price : 1;
-      return await this.client.placePerpOrder(
+      return await this.client.placePerpOrder2(
         this.mangoGroup,
         this.mangoAccount,
-        this.mangoGroup.mangoCache,
         perpMarket,
         this.owner,
         side,
         price,
         quantity,
-        orderType,
-        clientOrderId
+        { orderType, clientOrderId, expiryTimestamp }
       );
     } else {
       // serum doesn't really support market orders, calculate a pseudo market price
