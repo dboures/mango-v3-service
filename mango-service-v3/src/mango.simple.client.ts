@@ -398,7 +398,7 @@ class MangoSimpleClient {
     price?: number,
     orderType: "ioc" | "postOnly" | "market" | "limit" = "limit",
     clientOrderId?: number,
-    expiryTimestamp: number = 0
+    expiryTimestamp?: number
   ): Promise<TransactionSignature> {
     if (market.includes("PERP")) {
       const perpMarketConfig = getMarketByBaseSymbolAndKind(
