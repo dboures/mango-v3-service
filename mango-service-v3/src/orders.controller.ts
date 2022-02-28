@@ -40,6 +40,9 @@ class OrdersController implements Controller {
       body("ioc").isBoolean(),
       body("postOnly").isBoolean(),
       body("clientId").isNumeric(),
+      // expiring perp orders
+      // if undefined or 0 then non expiring, otherwise use now (epoch in seconds) + seconds to expire in (<255s)
+      body("expiryTimestamp").optional().isNumeric(),
       this.placeOrder
     );
 
@@ -124,7 +127,8 @@ class OrdersController implements Controller {
           : placeOrderDto.postOnly
           ? "postOnly"
           : "limit",
-        placeOrderDto.clientId
+        placeOrderDto.clientId,
+        placeOrderDto.expiryTimestamp
       )
       .then((transactionSignature) => {
         return response.send({
@@ -366,6 +370,7 @@ interface PlaceOrderDto {
   ioc: boolean;
   postOnly: boolean;
   clientId: number;
+  expiryTimestamp: number;
 }
 
 interface PlaceOrderResponseDto {
