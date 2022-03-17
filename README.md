@@ -29,7 +29,7 @@ docker-compose up
 
 * `docker-compose up` starts:
   - the REST API Service
-  -  the WEBSOCKET API Service
+  - the WEBSOCKET API Service
   - an nginx reverse proxy
 * Once the environment is running, the REST API and WEBSOCKET API are available on localhost
   - To test REST API: `curl http://localhost/api/wallet/balances`
