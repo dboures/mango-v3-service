@@ -20,7 +20,7 @@ Directory structure
 
 # How to start the service:
 ```
-git clone git@github.com:ZephyrTrading/mango-v3-service.git
+git clone git@github.com:blockworks-foundation/mango-v3-service.git
 cd mango-v3-service
 git submodules init
 git submodules update
