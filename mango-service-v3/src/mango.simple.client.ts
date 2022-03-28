@@ -431,6 +431,12 @@ class MangoSimpleClient {
         { orderType, clientOrderId, expiryTimestamp }
       );
     } else {
+      if (orderType === "postOnlySlide") {
+        throw new Error(
+          "OrdeType postOnlySlide not supported for spot markets."
+        );
+      }
+
       // serum doesn't really support market orders, calculate a pseudo market price
       price =
         orderType !== "market"
