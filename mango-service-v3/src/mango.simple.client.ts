@@ -396,7 +396,12 @@ class MangoSimpleClient {
     side: "buy" | "sell",
     quantity: number,
     price?: number,
-    orderType: "ioc" | "postOnly" | "market" | "limit" = "limit",
+    orderType:
+      | "ioc"
+      | "postOnly"
+      | "postOnlySlide"
+      | "market"
+      | "limit" = "limit",
     clientOrderId?: number,
     expiryTimestamp?: number
   ): Promise<TransactionSignature> {
